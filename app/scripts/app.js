@@ -6,7 +6,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('Mypokerleague', ['ionic', 'Mypokerleague.controllers'])
+angular.module('Mypokerleague', ['ionic', 'Mypokerleague.controllers','firebase'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -15,6 +15,11 @@ angular.module('Mypokerleague', ['ionic', 'Mypokerleague.controllers'])
     }
   });
 })
+
+.factory("ChatService", ["$firebase", function($firebase) {
+    var ref = new Firebase("https://mypokerleague.firebaseio.com/chat");
+    return $firebase(ref);
+}])
 
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
@@ -26,11 +31,12 @@ angular.module('Mypokerleague', ['ionic', 'Mypokerleague.controllers'])
       controller: 'AppCtrl'
     })
 
-    .state('app.search', {
-      url: '/search',
+    .state('app.login', {
+      url: '/login',
       views: {
         'menuContent' :{
-          templateUrl: 'templates/search.html'
+          templateUrl: 'templates/login.html',
+          controller: 'loginCtrl'
         }
       }
     })
@@ -54,6 +60,15 @@ angular.module('Mypokerleague', ['ionic', 'Mypokerleague.controllers'])
       }
     })
 
+    .state('app.newcalendar', {
+      url: '/newcalendar',
+      views: {
+        'menuContent' :{
+          templateUrl: 'templates/newcalendar.html',
+          controller: 'newCalendarCtrl'
+        }
+      }
+    })
     .state('app.single', {
       url: '/calendars/:calendarId',
       views: {

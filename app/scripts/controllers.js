@@ -1,10 +1,14 @@
 'use strict';
 angular.module('Mypokerleague.controllers', [])
 
-.controller('AppCtrl', function($scope) {
+.controller('AppCtrl', function($rootScope, $scope,$firebase, $firebaseSimpleLogin) {
+
 })
 
-.controller('calendarsCtrl', function($scope) {
+.controller('calendarsCtrl', function($scope,$firebase) {
+
+    $scope.activeSeason = 7;
+
   $scope.calendars = [
     { title: '09 septembre', id: 1 },
     { title: '30 septembre', id: 2 },
@@ -15,9 +19,37 @@ angular.module('Mypokerleague.controllers', [])
   ];
 })
 
-.controller('calendarCtrl', function($scope, $stateParams) {
+.controller('newCalendarCtrl', function($scope, $stateParams,$firebase) {
+
+    var calendarRef = new Firebase("https://mypokerleague.firebaseio.com/calendar/MSOP/08/01");
+    // Automatically syncs everywhere in realtime
+    $scope.calendars = $firebase(calendarRef);
+    calendarRef.update({date: '14 sept', nb: 12});
 })
 
+.controller('loginCtrl', function($rootScope, $scope, $stateParams,$firebase, $firebaseSimpleLogin) {
+
+    $scope.login = function(query) {
+        var ref = new Firebase('https://mypokerleague.firebaseio.com');
+        var auth = new FirebaseSimpleLogin(ref, function(error, user) {
+          if (error) {
+            // an error occurred while attempting login
+            console.log(error);
+          } else if (user) {
+            // user authenticated with Firebase
+            $rootScope.user = user;
+            $scope.user = user;
+            $scope.$apply();
+          } else {
+            // user is logged out                       
+          }
+        });
+        auth.login('google', {
+          rememberMe: true,
+          scope: 'https://www.googleapis.com/auth/plus.login'
+        });
+    };
+})
 .controller('rankingCtrl', function($scope, $stateParams) {
  $scope.ranks = [
     { title: 'Will', id: 1 },

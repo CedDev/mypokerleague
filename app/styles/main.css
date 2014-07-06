@@ -6,3 +6,12 @@
   width: 96px;
   height: 96px;
 }
+
+.bgPoker{
+	background-image: url('../images/01.jpg');
+}
+
+.listPoker{
+  background-color: #000!important;
+  font-weight: bold;
+}
