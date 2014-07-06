@@ -35,34 +35,35 @@ angular.module('Mypokerleague', ['ionic', 'Mypokerleague.controllers'])
       }
     })
 
-    .state('app.browse', {
-      url: '/browse',
+    .state('app.ranking', {
+      url: '/ranking',
       views: {
         'menuContent' :{
-          templateUrl: 'templates/browse.html'
+          templateUrl: 'templates/ranking.html',
+          controller: 'rankingCtrl'
         }
       }
     })
-    .state('app.playlists', {
-      url: '/playlists',
+    .state('app.calendars', {
+      url: '/calendars',
       views: {
         'menuContent' :{
-          templateUrl: 'templates/playlists.html',
-          controller: 'PlaylistsCtrl'
+          templateUrl: 'templates/calendars.html',
+          controller: 'calendarsCtrl'
         }
       }
     })
 
     .state('app.single', {
-      url: '/playlists/:playlistId',
+      url: '/calendars/:calendarId',
       views: {
         'menuContent' :{
-          templateUrl: 'templates/playlist.html',
-          controller: 'PlaylistCtrl'
+          templateUrl: 'templates/calendar.html',
+          controller: 'calendarCtrl'
         }
       }
     });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/playlists');
+  $urlRouterProvider.otherwise('/app/calendars');
 });
 

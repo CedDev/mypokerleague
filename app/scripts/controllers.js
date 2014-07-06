@@ -4,16 +4,27 @@ angular.module('Mypokerleague.controllers', [])
 .controller('AppCtrl', function($scope) {
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
+.controller('calendarsCtrl', function($scope) {
+  $scope.calendars = [
+    { title: '09 septembre', id: 1 },
+    { title: '30 septembre', id: 2 },
+    { title: '21 octobre', id: 3 },
+    { title: '15 novembre', id: 4 },
+    { title: '01 decembre', id: 5 },
+    { title: '22 decembre', id: 6 }
   ];
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
+.controller('calendarCtrl', function($scope, $stateParams) {
+})
+
+.controller('rankingCtrl', function($scope, $stateParams) {
+ $scope.ranks = [
+    { title: 'Will', id: 1 },
+    { title: 'sylvain', id: 2 },
+    { title: 'Laure', id: 3 },
+    { title: 'Guillaume', id: 4 },
+    { title: 'Cedric', id: 5 },
+    { title: 'Edouard', id: 6 }
+  ];
 });
