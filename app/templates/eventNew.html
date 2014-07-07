@@ -1,0 +1,43 @@
+<ion-view title="Calendrier">
+    <ion-content class="has-header bgPoker">
+        <div class="list card ">
+            <div class="item item-avatar">
+                <img src="images/ionic.png">
+                <h2>Planification Tournoi</h2>
+                <p>Saison {{season}}</p>
+            </div>
+            <label class="item item-input">
+                <span class="input-label">N° tournoi</span>
+                <input type="tel" class="pokerInput" ng-model="event.number">
+            </label>
+            <label class="item item-input">
+                <span class="item-note">Nom (facultatif)</span>
+                <input type="text" class="pokerInput" ng-model="event.name">
+            </label>
+            <label class="item item-input">            
+                <span class="input-label">Date</span>
+                <input type="text" class="pokerInput" ng-model="event.date">
+            </label>
+            <label class="item item-input"> 
+                <span class="input-label">Heure</span>
+                <input type="text" class="pokerInput" ng-model="event.time">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Lieu</span>
+                <input type="text" class="pokerInput" ng-model="event.location">
+            </label>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+    </ion-content>
+    <div class="bar bar-footer"> 
+        <button class="button button-clear" ng-click="goBack()">Annuler</button>
+        <div class="title"></div>
+        <button class="button button-positive pull-right" ng-click="saveEvent()"><i class="icon ion-android-checkmark"></i> Sauvegarder</button>
+    </div>
+</ion-view>

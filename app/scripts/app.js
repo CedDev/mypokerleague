@@ -50,35 +50,35 @@ angular.module('Mypokerleague', ['ionic', 'Mypokerleague.controllers','firebase'
         }
       }
     })
-    .state('app.calendars', {
-      url: '/calendars',
+    .state('app.events', {
+      url: '/events',
       views: {
         'menuContent' :{
-          templateUrl: 'templates/calendars.html',
-          controller: 'calendarsCtrl'
+          templateUrl: 'templates/events.html',
+          controller: 'eventsCtrl'
         }
       }
     })
 
-    .state('app.newcalendar', {
-      url: '/newcalendar',
+    .state('app.eventNew', {
+      url: '/eventNew',
       views: {
         'menuContent' :{
-          templateUrl: 'templates/newcalendar.html',
-          controller: 'newCalendarCtrl'
+          templateUrl: 'templates/eventNew.html',
+          controller: 'eventNewCtrl'
         }
       }
     })
     .state('app.single', {
-      url: '/calendars/:calendarId',
+      url: '/events/:leagueId/:seasonId/:eventId',
       views: {
         'menuContent' :{
-          templateUrl: 'templates/calendar.html',
-          controller: 'calendarCtrl'
+          templateUrl: 'templates/event.html',
+          controller: 'eventCtrl'
         }
       }
     });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/calendars');
+  $urlRouterProvider.otherwise('/app/events');
 }]);
 

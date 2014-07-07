@@ -1,25 +1,34 @@
 'use strict';
 angular.module('Mypokerleague.controllers', [])
 
-.controller('AppCtrl',  ['$rootScope', '$scope', '$firebase', '$firebaseSimpleLogin', function($rootScope, $scope,$firebase, $firebaseSimpleLogin) {
-
+.controller('AppCtrl',  ['$rootScope', '$scope', '$firebase', '$firebaseSimpleLogin', '$ionicNavBarDelegate', function($rootScope, $scope,$firebase, $firebaseSimpleLogin, $ionicNavBarDelegate) {
+      $scope.activeLeague = "MSOP";
+      $scope.activeSeason = "08";
+ $scope.goBack = function() {
+    $ionicNavBarDelegate.back();
+  };
 }])
 
-.controller('calendarCtrl', ['$scope', '$firebase', function($scope,$firebase) {
+.controller('eventCtrl', ['$scope', '$firebase', '$stateParams',function($scope,$firebase,$stateParams) {
+  console.log($stateParams);
+      $scope.activeLeague = $stateParams.leagueId;
+      $scope.activeSeason = $stateParams.seasonId;
+      $scope.activeEvent = $stateParams.eventId;
+
+      OfflineFirebase.restore();
+      var eventRef = new OfflineFirebase("https://mypokerleague.firebaseio.com/"+$scope.activeLeague+"/Events/"+$scope.activeSeason+"/"+ $scope.activeEvent );
+      $scope.event = $firebase(eventRef);
 }])
 
-.controller('calendarsCtrl', ['$scope', '$firebase', function($scope,$firebase) {
+.controller('eventsCtrl', ['$scope', '$firebase', function($scope,$firebase) {
 
-    $scope.activeSeason = 7;
-
-  $scope.calendars = [
-    { title: '09 septembre', id: 1 },
-    { title: '30 septembre', id: 2 },
-    { title: '21 octobre', id: 3 },
-    { title: '15 novembre', id: 4 },
-    { title: '01 decembre', id: 5 },
-    { title: '22 decembre', id: 6 }
-  ];
+    OfflineFirebase.restore();
+    var eventRef = new OfflineFirebase("https://mypokerleague.firebaseio.com/MSOP/Events/08/");
+    // Automatically syncs everywhere in realtime
+    $scope.events = $firebase(eventRef);
+    eventRef.on('value', function(snapshot) {
+        console.log(snapshot.val());
+    }, undefined, undefined, true);
 }])
 
 .controller('loginCtrl',  ['$rootScope', '$scope', '$stateParams','$firebase', '$firebaseSimpleLogin', function($rootScope, $scope, $stateParams,$firebase, $firebaseSimpleLogin) {
@@ -46,12 +55,17 @@ angular.module('Mypokerleague.controllers', [])
     };
 }])
 
-.controller('newCalendarCtrl',  ['$scope', '$stateParams','$firebase',  function($scope, $stateParams,$firebase) {
+.controller('newCalendarCtrl',  ['$scope', '$stateParams','$firebase',  function($scope, $stateParams, $firebase) {
+    $scope.season = "08";
+    $scope.event = {'number':null,'name':null,'date':null,'time':null,'location':null};
 
-    var calendarRef = new Firebase("https://mypokerleague.firebaseio.com/MSOP/Events/08/02");
-    // Automatically syncs everywhere in realtime
-    $scope.calendar = $firebase(calendarRef);
-    //calendarRef.update({date: '14 sept', lieu: 12, rank :[{'name':'Will','points':2400,'kill':5},{'name':'Sylv1','points':1100,'kill':3}]});
+    $scope.saveEvent = function() {
+      console.log($scope.event);
+      var eventRef = new Firebase("https://mypokerleague.firebaseio.com/MSOP/Events/08/" + $scope.event.number);
+      // Automatically syncs everywhere in realtime
+      $scope.event = $firebase(eventRef);
+      eventRef.update({name: $scope.event.name,date: $scope.event.date, time: $scope.event.time,  lieu: $scope.event.location, rank :[{}]});
+    };
 }])
 
 
