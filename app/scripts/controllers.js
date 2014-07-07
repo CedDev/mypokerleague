@@ -1,11 +1,14 @@
 'use strict';
 angular.module('Mypokerleague.controllers', [])
 
-.controller('AppCtrl', function($rootScope, $scope,$firebase, $firebaseSimpleLogin) {
+.controller('AppCtrl',  ['$rootScope', '$scope', '$firebase', '$firebaseSimpleLogin', function($rootScope, $scope,$firebase, $firebaseSimpleLogin) {
 
-})
+}])
 
-.controller('calendarsCtrl', function($scope,$firebase) {
+.controller('calendarCtrl', ['$scope', '$firebase', function($scope,$firebase) {
+}])
+
+.controller('calendarsCtrl', ['$scope', '$firebase', function($scope,$firebase) {
 
     $scope.activeSeason = 7;
 
@@ -17,17 +20,9 @@ angular.module('Mypokerleague.controllers', [])
     { title: '01 decembre', id: 5 },
     { title: '22 decembre', id: 6 }
   ];
-})
+}])
 
-.controller('newCalendarCtrl', function($scope, $stateParams,$firebase) {
-
-    var calendarRef = new Firebase("https://mypokerleague.firebaseio.com/calendar/MSOP/08/01");
-    // Automatically syncs everywhere in realtime
-    $scope.calendars = $firebase(calendarRef);
-    calendarRef.update({date: '14 sept', nb: 12});
-})
-
-.controller('loginCtrl', function($rootScope, $scope, $stateParams,$firebase, $firebaseSimpleLogin) {
+.controller('loginCtrl',  ['$rootScope', '$scope', '$stateParams','$firebase', '$firebaseSimpleLogin', function($rootScope, $scope, $stateParams,$firebase, $firebaseSimpleLogin) {
 
     $scope.login = function(query) {
         var ref = new Firebase('https://mypokerleague.firebaseio.com');
@@ -49,8 +44,18 @@ angular.module('Mypokerleague.controllers', [])
           scope: 'https://www.googleapis.com/auth/plus.login'
         });
     };
-})
-.controller('rankingCtrl', function($scope, $stateParams) {
+}])
+
+.controller('newCalendarCtrl',  ['$scope', '$stateParams','$firebase',  function($scope, $stateParams,$firebase) {
+
+    var calendarRef = new Firebase("https://mypokerleague.firebaseio.com/MSOP/Events/08/02");
+    // Automatically syncs everywhere in realtime
+    $scope.calendar = $firebase(calendarRef);
+    //calendarRef.update({date: '14 sept', lieu: 12, rank :[{'name':'Will','points':2400,'kill':5},{'name':'Sylv1','points':1100,'kill':3}]});
+}])
+
+
+.controller('rankingCtrl',  ['$scope', '$stateParams', function($scope, $stateParams) {
  $scope.ranks = [
     { title: 'Will', id: 1 },
     { title: 'sylvain', id: 2 },
@@ -59,4 +64,4 @@ angular.module('Mypokerleague.controllers', [])
     { title: 'Cedric', id: 5 },
     { title: 'Edouard', id: 6 }
   ];
-});
+}]);

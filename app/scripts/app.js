@@ -6,7 +6,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('Mypokerleague', ['ionic', 'Mypokerleague.controllers','firebase'])
+angular.module('Mypokerleague', ['ionic', 'Mypokerleague.controllers','firebase','pickadate'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -16,12 +16,12 @@ angular.module('Mypokerleague', ['ionic', 'Mypokerleague.controllers','firebase'
   });
 })
 
-.factory("ChatService", ["$firebase", function($firebase) {
+.factory("ChatService", ['$firebase', function($firebase) {
     var ref = new Firebase("https://mypokerleague.firebaseio.com/chat");
     return $firebase(ref);
 }])
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
     .state('app', {
@@ -80,5 +80,5 @@ angular.module('Mypokerleague', ['ionic', 'Mypokerleague.controllers','firebase'
     });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/calendars');
-});
+}]);
 

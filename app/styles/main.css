@@ -12,6 +12,15 @@
 }
 
 .listPoker{
-  background-color: #000!important;
   font-weight: bold;
+  color:#FFFFFF;
+  text-align: right;
+  background-color: #C0C0C0!important;
+}
+.listPoker a{
+  background-color: #2F97FF!important;
+}
+
+.pokerInput{
+	  background-color: #EBEBEB!important;
 }

@@ -4,7 +4,8 @@
   "dependencies": {
     "ionic": "v1.0.0-beta.8",
     "angularfire": "~0.7.1",
-    "angular-route": "~1.2.19"
+    "angular-route": "~1.2.19",
+    "angular-pickadate": "*"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.17",
