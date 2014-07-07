@@ -1,12 +1,17 @@
 'use strict';
 angular.module('Mypokerleague.controllers', [])
 
-.controller('AppCtrl',  ['$rootScope', '$scope', '$firebase', '$firebaseSimpleLogin', '$ionicNavBarDelegate', function($rootScope, $scope,$firebase, $firebaseSimpleLogin, $ionicNavBarDelegate) {
-      $scope.activeLeague = "MSOP";
-      $scope.activeSeason = "08";
- $scope.goBack = function() {
-    $ionicNavBarDelegate.back();
-  };
+.controller('AppCtrl',  ['$rootScope', '$scope','$ionicNavBarDelegate', 'Auth', function($rootScope, $scope, $ionicNavBarDelegate,Auth ) {
+    $scope.activeLeague = "MSOP";
+    $scope.activeSeason = "08";
+
+    $scope.goBack = function() {
+        $ionicNavBarDelegate.back();
+    };
+    $scope.logout = function () {
+      Auth.logout();
+    };
+
 }])
 
 .controller('eventCtrl', ['$scope', '$firebase', '$stateParams',function($scope,$firebase,$stateParams) {
@@ -27,7 +32,7 @@ angular.module('Mypokerleague.controllers', [])
     // Automatically syncs everywhere in realtime
     $scope.events = $firebase(eventRef);
     eventRef.on('value', function(snapshot) {
-        console.log(snapshot.val());
+        //console.log(snapshot.val());
     }, undefined, undefined, true);
 }])
 
@@ -78,4 +83,43 @@ angular.module('Mypokerleague.controllers', [])
     { title: 'Cedric', id: 5 },
     { title: 'Edouard', id: 6 }
   ];
-}]);
+}])
+
+.controller('AuthCtrl',  ['$scope', '$location', 'Auth', function ($scope, $location, Auth) {
+
+    $scope.user ={};
+
+    if (Auth.signedIn()) {
+      $location.path('/app/events');
+    }
+ 
+    $scope.$on('$firebaseSimpleLogin:login', function () {
+      $location.path('/app/events');
+    });
+ 
+    $scope.login = function () {
+      Auth.login($scope.user).then(function () {
+        $location.path('/');
+      }, function (error) {
+        $scope.error = error.toString();
+      });
+    };
+ 
+    $scope.loginGoogle = function () {
+      Auth.loginGoogle().then(function () {
+        $location.path('/');
+      }, function (error) {
+        $scope.error = error.toString();
+      });
+    };
+
+    $scope.register = function () {
+      Auth.register($scope.user).then(function (authUser) {
+        console.log('register ok');
+        $location.path('/');
+      }, function (error) {
+        console.log(error);
+        $scope.error = error.toString();
+      });
+    };
+  }]);

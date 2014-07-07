@@ -14,8 +14,14 @@
     </header>
     <ion-content class="has-header">
       <ion-list>
-        <ion-item nav-clear menu-close href="#/app/login">
+        <ion-item nav-clear menu-close href="#/app/register"ng-hide="signedIn()">
+          Créer un compte
+        </ion-item>
+        <ion-item nav-clear menu-close href="#/app/login" ng-hide="signedIn()">
           Se connecter
+        </ion-item>
+        <ion-item nav-clear menu-close ng-click="logout()" ng-show="signedIn()">
+          Se déconnecter
         </ion-item>
         <ion-item nav-clear menu-close href="#/app/leagues">
           Ligues

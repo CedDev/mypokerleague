@@ -1,14 +1,14 @@
-<ion-view title="Connexion">
+<ion-view title="Créer un compte">
     <ion-nav-buttons side="left">
         <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
     </ion-nav-buttons>
     <ion-content class="has-header bgPoker">
         <div class="list card">
             <div class="auth-forms">
-                <form ng-submit="login()">
+                <form ng-submit="register()">
                     <div class="item item-avatar">
                         <img src="images/ionic.png">
-                        <h2>Se connecter</h2>
+                        <h2>Créer un nouveau compte</h2>
                         <p>Saison {{season}}</p>
                     </div>
                     <p ng-show="error" class="text-danger">{{ error }}</p>
@@ -21,17 +21,10 @@
                         <input type="password" ng-model="user.password"  class="pokerInput">
                     </label> 
                     <label class="item item-input">
-                        <input type="submit" value="Se connecter" class="btn btn-primary" style="height:50px;background-color:#2F97FF;text-align:right;font-weight:bold"/>
+                        <input type="submit" value="Créer" class="btn btn-primary" style="height:50px;background-color:#2F97FF;text-align:right;font-weight:bold"/>
                     </label> 
                 </form>
             </div>
         </div>
-         <div class="list card">
-         <ion-list >
-            <ion-item class="item " ng-click="loginGoogle()">
-                Google
-            </ion-item>
-            </ion-list >
-         </div>
     </ion-content>
 </ion-view>

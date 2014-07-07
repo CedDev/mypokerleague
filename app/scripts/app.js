@@ -6,7 +6,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('Mypokerleague', ['ionic', 'Mypokerleague.controllers','firebase','pickadate'])
+angular.module('Mypokerleague', ['ionic', 'Mypokerleague.controllers','Mypokerleague.services','firebase','pickadate'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -16,10 +16,7 @@ angular.module('Mypokerleague', ['ionic', 'Mypokerleague.controllers','firebase'
   });
 })
 
-.factory("ChatService", ['$firebase', function($firebase) {
-    var ref = new Firebase("https://mypokerleague.firebaseio.com/chat");
-    return $firebase(ref);
-}])
+.constant('FIREBASE_URL', 'https://mypokerleague.firebaseio.com/')
 
 .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
   $stateProvider
@@ -36,7 +33,17 @@ angular.module('Mypokerleague', ['ionic', 'Mypokerleague.controllers','firebase'
       views: {
         'menuContent' :{
           templateUrl: 'templates/login.html',
-          controller: 'loginCtrl'
+          controller: 'AuthCtrl'
+        }
+      }
+    })
+
+    .state('app.register', {
+      url: '/register',
+      views: {
+        'menuContent' :{
+          templateUrl: 'templates/register.html',
+          controller: 'AuthCtrl'
         }
       }
     })
