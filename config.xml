@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.example.Mypokerleague" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.example.Mypokerleague" version="0.3.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Mypokerleague</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        A Poker League Management application that responds to every poker team needs.
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="willy.stophe.pro@gmail.com" href="https://twitter.com/WillSTOPHE">
+        Wilsto Team
     </author>
     <content src="index.html" />
     <access origin="*" />

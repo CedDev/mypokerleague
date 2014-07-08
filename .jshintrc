@@ -6,19 +6,26 @@
   "camelcase": true,
   "curly": true,
   "eqeqeq": true,
+  "expr":true,
   "immed": true,
-  "indent": 2,
   "latedef": true,
+  "laxcomma": true,
   "newcap": true,
   "noarg": true,
   "quotmark": "single",
   "regexp": true,
-  "undef": true,
-  "unused": true,
+  "undef": false,
+  "unused": false,
   "strict": true,
   "trailing": true,
   "smarttabs": true,
+  "-W040":true,
   "globals": {
-    "angular": false
+    "angular": false,
+    "_": false,
+    "$": false,
+    "Ladda": false,
+    "bootbox": false,
+    "routingConfig":false
   }
 }

@@ -24,3 +24,7 @@
 .pokerInput{
 	  background-color: #EBEBEB!important;
 }
+
+.pokerInputDisabled{
+    color: #B0B0B0!important;
+}

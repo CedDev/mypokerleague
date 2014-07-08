@@ -1,0 +1,75 @@
+<ion-view title="Mon compte">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-content class="has-header bgPoker">
+    <div class="list card" ng-hide="signedIn()">
+      <ion-list>
+        <ion-item nav-clear menu-close href="#/app/register" ng-hide="signedIn()">
+          Créer un compte
+        </ion-item>
+        <ion-item nav-clear menu-close href="#/app/login" ng-hide="signedIn()">
+          Se connecter
+        </ion-item>
+      </ion-list>
+    </div>
+    <div class="list card" ng-show="signedIn()">
+        <div class="item item-avatar">
+                <img src="images/ionic.png">
+                <h2>Informations du compte</h2>
+                <p>Saison {{season}}</p>
+            </div>
+            <label class="item item-input">            
+                <span class="input-label">Pseudo</span>
+                <input type="text" class="pokerInput" ng-model="player.pseudo">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Nom Réel</span>
+                <input type="text" class="pokerInput" ng-model="player.realName">
+            </label>
+            <label class="item item-input"> 
+                <span class="input-label">Contact  mobile</span>
+                <input type="text" class="pokerInput" placeHolder="06."ng-model="player.mobile">
+            </label>
+            <ion-list >
+              <ion-item class="item item-icon-left item-icon-right" href="#/app/eventNew">
+                <i class="icon ion-location"></i>
+                Adresse
+                <i class="icon ion-chevron-down"></i> 
+              </ion-item>
+            </ion-list>
+    </div>
+
+        <div class="list card" ng-show="signedIn()">
+                    <label class="item item-input">
+                <span class="input-label">eMail</span>
+                <input type="tel" disabled="disabled" class="pokerInputDisabled" ng-model="player.email">
+            </label>
+            <label class="item item-input"> 
+                <span class="input-label">Type compte</span>
+                <input type="text" disabled="disabled" class="pokerInputDisabled" ng-model="player.provider">
+            </label>
+
+            <label class="item item-input">
+                <span class="input-label">Date inscription</span>
+                <input type="text" disabled="disabled" class="pokerInputDisabled" ng-model="player.registerDate">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Dernière connexion</span>
+                <input type="text" disabled="disabled" class="pokerInputDisabled" ng-model="player.lastConn">
+            </label>
+    </div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+    </ion-content>
+    <div class="bar bar-footer" ng-show="signedIn()"> 
+        <button class="button button-assertive" ng-click="logout()">Se déconnecter</button>
+        <div class="title"></div>
+        <button class="button button-positive pull-right" ng-click="saveUser()"><i class="icon ion-android-checkmark"></i> Sauvegarder</button>
+    </div>
+</ion-view>

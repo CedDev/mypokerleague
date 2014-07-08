@@ -6,7 +6,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('Mypokerleague', ['ionic', 'Mypokerleague.controllers','Mypokerleague.services','firebase','pickadate'])
+angular.module('Mypokerleague', ['ionic','firebase','pickadate'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -33,7 +33,7 @@ angular.module('Mypokerleague', ['ionic', 'Mypokerleague.controllers','Mypokerle
       views: {
         'menuContent' :{
           templateUrl: 'templates/login.html',
-          controller: 'AuthCtrl'
+          controller: 'loginCtrl'
         }
       }
     })
@@ -44,6 +44,25 @@ angular.module('Mypokerleague', ['ionic', 'Mypokerleague.controllers','Mypokerle
         'menuContent' :{
           templateUrl: 'templates/register.html',
           controller: 'AuthCtrl'
+        }
+      }
+    })
+
+    .state('app.profil', {
+      url: '/profil',
+      views: {
+        'menuContent' :{
+          templateUrl: 'templates/profil.html',
+          controller: 'profilCtrl'
+        }
+      }
+    })
+    .state('app.tools', {
+      url: '/tools',
+      views: {
+        'menuContent' :{
+          templateUrl: 'templates/tools.html',
+          controller: 'toolsCtrl'
         }
       }
     })

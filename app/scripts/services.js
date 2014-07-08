@@ -1,20 +1,23 @@
 'use strict';
  
-angular.module('Mypokerleague.services', [])
+angular.module('Mypokerleague')
 
 .factory('Auth',  ['$firebaseSimpleLogin', '$rootScope', function ($firebaseSimpleLogin, $rootScope) {
 
   var ref = new Firebase('https://mypokerleague.firebaseio.com/');
 
-  var auth = $firebaseSimpleLogin(ref);
+  var auth = $firebaseSimpleLogin(ref, function(error, user) {
+  });
 
   var Auth = {
     register: function (user) {
-      console.log(user);
       return auth.$createUser(user.email, user.password);
     },
     signedIn: function () {
       return auth.user !== null;
+    },
+    getUser: function () {
+      return auth.user;
     },
     login: function (user) {
       return auth.$login('password', user);

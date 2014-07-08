@@ -14,26 +14,23 @@
     </header>
     <ion-content class="has-header">
       <ion-list>
-        <ion-item nav-clear menu-close href="#/app/register"ng-hide="signedIn()">
-          Créer un compte
-        </ion-item>
-        <ion-item nav-clear menu-close href="#/app/login" ng-hide="signedIn()">
-          Se connecter
-        </ion-item>
-        <ion-item nav-clear menu-close ng-click="logout()" ng-show="signedIn()">
-          Se déconnecter
-        </ion-item>
+        <ion-item nav-clear menu-close href="#/app/profil" >
+          <i class="icon ion-locked"></i> Mon compte
+        </ion-item>   
+        <ion-item nav-clear menu-close>
+          
+        </ion-item>  
+        <ion-item nav-clear menu-close href="#/app/home">
+          <i class="icon  ion-home"></i> Accueil
+        </ion-item>   
         <ion-item nav-clear menu-close href="#/app/leagues">
-          Ligues
+          <i class="icon ion-person-stalker"></i> Ligues
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/events">
-          Calendrier
+        <ion-item nav-clear menu-close href="#/app/tools">
+          <i class="icon ion-wand"></i> Outils
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/ranking">
-          Classement
-        </ion-item>
-        <ion-item nav-clear menu-close href="#/app/live">
-          Tournoi Live
+        <ion-item nav-clear menu-close href="#/app/about">
+          <i class="icon ion-information-circled"></i> A propos
         </ion-item>
       </ion-list>
     </ion-content>
