@@ -1,0 +1,53 @@
+<ion-view title=" <i class='icon ion-calendar'></i> Leagues">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-content class="has-header bgPoker">
+
+    <div class="list card">
+
+  <div class="item item-avatar">
+    <img src="images/ionic.png">
+    <h2> Liste des ligues </h2>
+    <p>Vos ligues : <strong>1</strong> &nbsp;&nbsp;&nbsp;&nbsp;Total : <strong>{{leagues.length}}</strong></p>
+  </div>
+      <ion-list >
+    <ion-item class="item item-icon-left item-icon-right" href="#/app/eventNew">
+    <i class="icon ion-ios7-help"></i>
+       <i class="icon ion-chevron-right"></i> Tutoriel
+    </ion-item>
+    </ion-list >
+</div>
+    <div class="list card">
+    <ion-list >
+      <ion-item ng-repeat="league in leagues" href="#/app/league/{{league.name}}" class="item item-icon-left item-icon-right">
+        <i class="icon ion-ios7-locked-outline"></i>
+        {{league.name}} 
+        <span class="item-note" style="float:right;margin-right:40px;">Master Series Of Poker</span>
+        <i class="icon ion-chevron-right"></i>
+      </ion-item>
+    </ion-list>
+        </div>
+
+          <div class="list card">
+    <ion-list >
+      <ion-item href="#/app/leagues/other" class="item item-icon-left item-icon-right">
+       <i class="icon ion-ios7-plus-outline"></i>
+        rejoindre d'autres ligues 
+        <i class="icon ion-chevron-right"></i>
+      </ion-item>
+    </ion-list>
+        </div>
+<br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+    </ion-content>
+    <div class="bar bar-footer" ng-show="signedIn()"> 
+        <div class="title"></div>
+        <button class="button button-positive pull-right" ng-click="createLeague()"><i class="icon ion-ios7-people"></i> Créer une ligue</button>
+    </div>
+</ion-view>

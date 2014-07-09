@@ -1,0 +1,24 @@
+<ion-view title=" <i class='icon ion-person-stalker'></i> Joueurs  {{activeLeague}}">
+
+  <ion-content class="has-header bgPoker">
+
+      <div class="list card">
+    <ion-list >
+      <ion-item ng-repeat="player in players" href="#/app/players/{{activeLeague}}" class="item item-icon-left item-icon-right">
+        <i class="icon ion-ios7-person-outline"></i>
+        {{player.pseudo}}
+        <i class="icon ion-chevron-right"></i>
+      </ion-item>
+        </ion-list>
+    </div>
+      <div class="list card">
+    <ion-list >
+        <ion-item href="#/app/playerNew" class="item item-icon-left  item-icon-right">
+       <i class="icon ion-ios7-plus-outline"></i> 
+       Ajouter d'autres joueurs
+          <i class="icon ion-chevron-right"></i>
+    </ion-item>
+    </ion-list>
+    </div>
+  </ion-content>
+</ion-view>

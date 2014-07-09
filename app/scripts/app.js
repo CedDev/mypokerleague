@@ -57,7 +57,7 @@ angular.module('Mypokerleague', ['ionic','firebase','pickadate'])
     })
 
     .state('app.league', {
-      url: '/league',
+      url: '/league/:leagueId',
       views: {
         'menuContent' :{
           templateUrl: 'templates/league.html',
@@ -124,8 +124,19 @@ angular.module('Mypokerleague', ['ionic','firebase','pickadate'])
         }
       }
     })
+
+    .state('app.players', {
+      url: '/players/:leagueId',
+      views: {
+        'menuContent' :{
+          templateUrl: 'templates/players.html',
+          controller: 'playersCtrl'
+        }
+      }
+    })
+
     .state('app.events', {
-      url: '/events',
+      url: '/events/:leagueId/:seasonId',
       views: {
         'menuContent' :{
           templateUrl: 'templates/events.html',

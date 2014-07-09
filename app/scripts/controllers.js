@@ -24,6 +24,81 @@ angular.module('Mypokerleague')
 .controller('homeCtrl', ['$scope', '$firebase', '$stateParams',function($scope,$firebase,$stateParams) {
 }])
 
+.controller('leaguesCtrl', ['$scope', '$firebase', '$stateParams',function($scope,$firebase,$stateParams) {
+   $scope.leagues = [
+    { name: 'MSOP', id: 1 }
+  ];
+}])
+
+.controller('leagueCtrl', ['$scope', '$firebase', '$stateParams',function($scope,$firebase,$stateParams) {
+   $scope.league = [
+    { name: 'MSOP', id: 1 }
+  ];
+}])
+
+.controller('playersCtrl', ['$scope', '$firebase', '$stateParams',function($scope,$firebase,$stateParams) {
+
+  var fb = new Firebase("https://mypokerleague.firebaseio.com/");
+      
+      $scope.players = [];
+      fb.child('MSOP/Players').on('child_added', function (snap) {
+          loadUser(snap.name(), function(error, obj){
+            $scope.$apply(function () {
+              $scope.players.push(obj);
+            });
+          });
+      });
+
+  function joinPaths(id, paths, callback) {
+      var returnCount = 0;
+      var expectedCount = paths.length;
+      var mergedObject = {};
+
+      paths.forEach(function (p) {
+          fb.child(p + '/' + id).once('value',
+              // success
+              function (snap) {
+                  // add it to the merged data
+                  extend(mergedObject, snap.val());
+                  
+                  // when all paths have resolved, we invoke
+                  // the callback (jQuery.when would be handy here)
+                  if (++returnCount === expectedCount) {
+                      callback(null, mergedObject);
+                  }
+              },
+              // error
+              function (error) {
+                  returnCount = expectedCount + 1; // abort counters
+                  callback(error, null);
+              }
+          );
+      });
+  }
+
+  function loadUser(userId, callback) {
+      joinPaths(userId, ['users'], function(error, obj){
+        callback(null, obj);
+      });
+  }
+
+  function extend(base) {
+      var parts = Array.prototype.slice.call(arguments, 1);
+      parts.forEach(function (p) {
+          if (p && typeof (p) === 'object') {
+              for (var k in p) {
+                  if (p.hasOwnProperty(k)) {
+                      base[k] = p[k];
+                  }
+              }
+          }
+      });
+      return base;
+  }
+
+
+}])
+
 .controller('eventCtrl', ['$scope', '$firebase', '$stateParams',function($scope,$firebase,$stateParams) {
       $scope.activeLeague = $stateParams.leagueId;
       $scope.activeSeason = $stateParams.seasonId;
@@ -46,8 +121,8 @@ angular.module('Mypokerleague')
 }])
 
 .controller('loginCtrl',  ['$rootScope', '$scope', '$stateParams','$firebase', '$firebaseSimpleLogin', function($rootScope, $scope, $stateParams,$firebase, $firebaseSimpleLogin) {
-$scope.user= {};
 
+  $scope.user= {};
 
     $scope.login = function(query) {
         var ref = new Firebase('https://mypokerleague.firebaseio.com');
