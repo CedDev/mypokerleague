@@ -28,6 +28,54 @@ angular.module('Mypokerleague', ['ionic','firebase','pickadate'])
       controller: 'AppCtrl'
     })
 
+    .state('app.home', {
+      url: '/home',
+      views: {
+        'menuContent' :{
+          templateUrl: 'templates/home.html',
+          controller: 'homeCtrl'
+        }
+      }
+    })
+
+    .state('app.about', {
+      url: '/about',
+      views: {
+        'menuContent' :{
+          templateUrl: 'templates/about.html'
+        }
+      }
+    })
+    .state('app.leagues', {
+      url: '/leagues',
+      views: {
+        'menuContent' :{
+          templateUrl: 'templates/leagues.html',
+          controller: 'leaguesCtrl'
+        }
+      }
+    })
+
+    .state('app.league', {
+      url: '/league',
+      views: {
+        'menuContent' :{
+          templateUrl: 'templates/league.html',
+          controller: 'leagueCtrl'
+        }
+      }
+    })
+
+    .state('app.seasons', {
+      url: '/seasons',
+      views: {
+        'menuContent' :{
+          templateUrl: 'templates/seasons.html',
+          controller: 'seasonsCtrl'
+        }
+      }
+    })
+
     .state('app.login', {
       url: '/login',
       views: {
@@ -105,6 +153,6 @@ angular.module('Mypokerleague', ['ionic','firebase','pickadate'])
       }
     });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/events');
+  $urlRouterProvider.otherwise('/app/home');
 }]);
 

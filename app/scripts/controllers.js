@@ -21,6 +21,9 @@ angular.module('Mypokerleague')
 
 }])
 
+.controller('homeCtrl', ['$scope', '$firebase', '$stateParams',function($scope,$firebase,$stateParams) {
+}])
+
 .controller('eventCtrl', ['$scope', '$firebase', '$stateParams',function($scope,$firebase,$stateParams) {
       $scope.activeLeague = $stateParams.leagueId;
       $scope.activeSeason = $stateParams.seasonId;
