@@ -3,7 +3,7 @@
     <div class="list card">
 
   <div class="item item-avatar">
-    <img src="images/ionic.png">
+    <img src="images/icon-96-xhdpi.png">
     <h1> Tournoi : <strong>{{activeEvent}}</strong></h1>
     <p>Ligue : <strong>{{activeLeague}}</strong> &nbsp;&nbsp;&nbsp;&nbsp;Saison : <strong>{{activeSeason}}</strong></p>
   </div>
@@ -26,12 +26,18 @@
     <ion-item >
        Date : {{event.date}}  {{event.time}}
     </ion-item>
-    <ion-item class="item item-icon-left item-icon-right" href="#/app/eventNew">
+    <ion-item class="item item-icon-left item-button-right">
+        <i class="icon ion-ios7-help"></i> S'inscrire
+        <button class="button" ng-class="{'button-balanced' : player.eventInfo.register ==='ok','button-assertive' : player.eventInfo.register ==='nok' , 'button-energized' : player.eventInfo.register === undefined}"  ng-click="showRegister()">
+            <i class="icon" ng-class="{'ion-ios7-checkmark-outline' : player.eventInfo.register ==='ok','ion-ios7-close-outline' : player.eventInfo.register ==='nok' , 'ion-ios7-help-empty' : player.eventInfo.register === undefined}" ></i>
+        </button>
+    </ion-item>
+     <ion-item class="item item-icon-left item-icon-right" href="#/app/working">
     <i class="icon ion-person-stalker"></i>
        <span class="badge badge-calm"  style="margin-right:20px;">0</span>
        <i class="icon ion-chevron-right"></i> Liste des joueurs
     </ion-item>
-    <ion-item class="item item-icon-left  item-icon-right" href="#/app/eventNew">
+    <ion-item class="item item-icon-left  item-icon-right" href="#/app/working">
        <i class="icon ion-location"></i> Lieu du tournoi
         <span class="item-note" >{{event.location}}</span>
        <i class="icon ion-chevron-right"></i> 
@@ -47,37 +53,24 @@
 
 </div>
     <div class="list card">
-
-  <div class="item tabs tabs-secondary tabs-icon-left">
-    <a class="tab-item" href="#">
-      <i class="icon ion-thumbsup"></i>
-      Like
-    </a>
-    <a class="tab-item" href="#">
-      <i class="icon ion-chatbox"></i>
-      Comment
-    </a>
-    <a class="tab-item" href="#">
-      <i class="icon ion-share"></i>
-      Share
-    </a>
-  </div>
-
     <ion-list >
+    <ion-item >
+        <button class="button button-positive" go-click="/app/eventLive/{{activeLeague}}/{{activeSeason}}/{{activeEvent}}"><i class="icon ion-play"></i> Commencer le tournoi</button>
+    </ion-item>
     <ion-item >
        Vainqueur : {{event.winner}}
     </ion-item>
-    <ion-item class="item item-icon-left item-icon-right" href="#/app/eventNew">
+    <ion-item class="item item-icon-left item-icon-right" href="#/app/working">
     <i class="icon ion-podium"></i>
        <span class="badge badge-balanced"  style="margin-right:20px;">0</span>
        <i class="icon ion-chevron-right"></i> Classement
     </ion-item>
-    <ion-item class="item item-icon-left  item-icon-right" href="#/app/eventNew">
+    <ion-item class="item item-icon-left  item-icon-right" href="#/app/working">
        <i class="icon ion-chatbubbles"></i>
               <span class="badge badge-balanced"  style="margin-right:20px;">0</span> Commentaires
        <i class="icon ion-chevron-right"></i> 
     </ion-item>
-        <ion-item class="item item-icon-left  item-icon-right" href="#/app/eventNew">
+        <ion-item class="item item-icon-left  item-icon-right" href="#/app/working">
                <span class="badge badge-balanced"  style="margin-right:20px;">0</span>
        <i class="icon ion-images"></i> Photos
        <i class="icon ion-chevron-right"></i> 
@@ -87,5 +80,15 @@
 
 </div>
 <br/>
-  </ion-content>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+    </ion-content>
+    <div class="bar bar-footer"> 
+        <div class="title"></div>
+        <button class="button pull-right" go-click="/app/eventEdit/{{activeLeague}}/{{activeSeason}}/{{activeEvent}}"><i class="icon ion-ios7-people"></i> Modifier</button>
+    </div>
 </ion-view>

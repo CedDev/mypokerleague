@@ -1,10 +1,10 @@
-<ion-view title="Calendrier">
+<ion-view title="<strong>Edit - </strong> <i class='icon ion-calendar'></i> {{activeLeague}} S{{activeSeason}}E{{activeEvent}}">
     <ion-content class="has-header bgPoker">
         <div class="list card ">
             <div class="item item-avatar">
-                <img src="images/ionic.png">
+                <img src="images/icon-96-xhdpi.png">
                 <h2>Planification Tournoi</h2>
-                <p>Saison {{season}}</p>
+                <p> {{activeLeague}}  -- Saison {{activeSeason}}</p>
             </div>
             <label class="item item-input">
                 <span class="input-label">N° tournoi</span>
@@ -24,7 +24,7 @@
             </label>
             <label class="item item-input">
                 <span class="input-label">Lieu</span>
-                <input type="text" class="pokerInput" ng-model="event.location">
+                <input type="text" class="pokerInput" ng-model="event.lieu">
             </label>
         </div>
         <br/>

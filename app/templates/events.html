@@ -1,16 +1,46 @@
 <ion-view title=" <i class='icon ion-calendar'></i> {{activeLeague}} S{{activeSeason}}">
-
+    <ion-nav-buttons side="right">
+    <button menu-toggle="right" class="button button-icon icon ion-ios7-help-outline"></button>
+  </ion-nav-buttons>
   <ion-content class="has-header bgPoker">
+
+    <div class="list card">
+
+  <div class="item item-avatar">
+    <img src="images/icon-96-xhdpi.png">
+    <h2> Saison : <strong>{{activeSeason}}</strong></h2>
+    <p>Ligue : <strong>{{activeLeague}}</strong></p>
+  </div>
     <ion-list >
+     <ion-item class="item item-icon-left item-icon-right" href="#/app/working">
+      <i class="icon ion-ios7-settings-strong"></i>
+       <i class="icon ion-chevron-right"></i> Configuration
+    </ion-item>
+    </ion-list >
+
+
+</div>
+
+    <div class="list card">
+    <ion-list show-delete="data.showDelete">
       <ion-item ng-repeat="(key,event) in events" href="#/app/events/{{activeLeague}}/{{activeSeason}}/{{key}}" class="item item-icon-right">
+
         <strong style="background-color:#C0C0C0;padding:10px;margin-right:10px;">{{key}}</strong>  {{event.date}} 
-        <span class="item-note" style="float:right;margin-right:40px;">{{event.name}}</span>
-        <span class="badge badge-calm"  style="margin-right:20px;">0</span>
-        <i class="icon ion-chevron-right"></i>
+        <span class="item-note" style="float:right;margin-right:10px;">{{event.lieu}}</span>
+        <i class="icon ion-chevron-right"></i>        <ion-delete-button class="ion-minus-circled" ng-click="removeEvent(key, event)">
       </ion-item>
     </ion-list>
-    <ion-item class="listPoker" href="#/app/eventNew">
-       <i class="icon ion-android-add"></i> Ajouter une date
-    </ion-item>
-  </ion-content>
+    </div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+    </ion-content>
+    <div class="bar bar-footer"> 
+        <button class="button button-icon icon ion-ios7-minus-outline" ng-click="data.showDelete = !data.showDelete" ng-show="data.currentSlide ===0"></button>
+        <div class="title"></div>
+        <button class="button button-positive pull-right" go-click="/app/eventEdit/{{activeLeague}}/{{activeSeason}}"><i class="icon ion-ios7-people"></i> Ajouter une date</button>
+    </div>
 </ion-view>

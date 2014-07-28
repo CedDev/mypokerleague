@@ -2,21 +2,18 @@
   <ion-nav-buttons side="left">
     <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
   </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+    <button menu-toggle="right" class="button button-icon icon ion-ios7-help-outline"></button>
+  </ion-nav-buttons>
   <ion-content class="has-header bgPoker">
 
     <div class="list card">
 
   <div class="item item-avatar">
-    <img src="images/ionic.png">
+    <img src="images/icon-96-xhdpi.png">
     <h2> Liste des ligues </h2>
     <p>Vos ligues : <strong>1</strong> &nbsp;&nbsp;&nbsp;&nbsp;Total : <strong>{{leagues.length}}</strong></p>
   </div>
-      <ion-list >
-    <ion-item class="item item-icon-left item-icon-right" href="#/app/eventNew">
-    <i class="icon ion-ios7-help"></i>
-       <i class="icon ion-chevron-right"></i> Tutoriel
-    </ion-item>
-    </ion-list >
 </div>
     <div class="list card">
     <ion-list >
@@ -29,16 +26,6 @@
     </ion-list>
         </div>
 
-          <div class="list card">
-    <ion-list >
-      <ion-item href="#/app/leagues/other" class="item item-icon-left item-icon-right">
-       <i class="icon ion-ios7-plus-outline"></i>
-        rejoindre d'autres ligues 
-        <i class="icon ion-chevron-right"></i>
-      </ion-item>
-    </ion-list>
-        </div>
-<br/>
         <br/>
         <br/>
         <br/>
@@ -46,8 +33,9 @@
         <br/>
         <br/>
     </ion-content>
-    <div class="bar bar-footer" ng-show="signedIn()"> 
+    <div class="bar bar-footer"> 
+        <button class="button" ng-click="prevSlide()"><i class="icon ion-ios7-bolt-outline"></i> Rejoindre une ligue</button>
         <div class="title"></div>
-        <button class="button button-positive pull-right" ng-click="createLeague()"><i class="icon ion-ios7-people"></i> Créer une ligue</button>
+        <button class="button button-positive pull-right" ng-click="createLeague()"><i class="icon ion-ios7-people"></i> Créer votre ligue</button>
     </div>
 </ion-view>

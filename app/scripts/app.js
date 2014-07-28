@@ -46,6 +46,16 @@ angular.module('Mypokerleague', ['ionic','firebase','pickadate'])
         }
       }
     })
+
+    .state('app.working', {
+      url: '/working',
+      views: {
+        'menuContent' :{
+          templateUrl: 'templates/working.html'
+        }
+      }
+    })
+
     .state('app.leagues', {
       url: '/leagues',
       views: {
@@ -145,16 +155,27 @@ angular.module('Mypokerleague', ['ionic','firebase','pickadate'])
       }
     })
 
-    .state('app.eventNew', {
-      url: '/eventNew',
+    .state('app.eventEdit', {
+      url: '/eventEdit/:leagueId/:seasonId/:eventId',
       views: {
         'menuContent' :{
-          templateUrl: 'templates/eventNew.html',
-          controller: 'eventNewCtrl'
+          templateUrl: 'templates/eventEdit.html',
+          controller: 'eventEditCtrl'
         }
       }
     })
-    .state('app.single', {
+
+
+    .state('app.eventLive', {
+      url: '/eventLive/:leagueId/:seasonId/:eventId',
+      views: {
+        'menuContent' :{
+          templateUrl: 'templates/eventLive.html',
+          controller: 'eventLiveCtrl'
+        }
+      }
+    })
+    .state('app.event', {
       url: '/events/:leagueId/:seasonId/:eventId',
       views: {
         'menuContent' :{

@@ -2,23 +2,42 @@
 
   <ion-content class="has-header bgPoker">
 
-      <div class="list card">
-    <ion-list >
-      <ion-item ng-repeat="player in players" href="#/app/players/{{activeLeague}}" class="item item-icon-left item-icon-right">
-        <i class="icon ion-ios7-person-outline"></i>
-        {{player.pseudo}}
-        <i class="icon ion-chevron-right"></i>
-      </ion-item>
-        </ion-list>
-    </div>
-      <div class="list card">
-    <ion-list >
-        <ion-item href="#/app/playerNew" class="item item-icon-left  item-icon-right">
-       <i class="icon ion-ios7-plus-outline"></i> 
-       Ajouter d'autres joueurs
-          <i class="icon ion-chevron-right"></i>
-    </ion-item>
-    </ion-list>
-    </div>
+
+        <ion-slide-box on-slide-changed="slideChanged(index)" show-pager="false">
+          <ion-slide>
+            <div class="list card">
+            <ion-list show-delete="data.showDelete">
+              <ion-item ng-repeat="(key,player) in players" href="#/app/players/{{activeLeague}}" class="item item-icon-left item-icon-right">
+                <ion-delete-button class="ion-minus-circled" ng-click="removePlayer(key)">
+                </ion-delete-button>
+                <i class="icon ion-ios7-person-outline"></i>
+                {{player.pseudo}}
+                <i class="icon ion-chevron-right"></i>
+              </ion-item>
+                </ion-list>
+            </div>
+          </ion-slide>
+          <ion-slide>
+                       <div class="list card">
+            <ion-list >
+              <ion-item ng-repeat="(key,player) in otherPlayers" ng-click="addPlayer(key, player)"class="item item-icon-left item-icon-right">
+                <i class="icon ion-ios7-person-outline"></i>
+                {{player.pseudo}}
+                <i class="icon ion-chevron-right"></i>
+              </ion-item>
+                </ion-list>
+            </div>
+          </ion-slide>
+        </ion-slide-box>
+
+      
   </ion-content>
+
+      <div class="bar bar-footer" > 
+              <button class="button" ng-click="prevSlide()" ng-show="data.currentSlide >0"><i class="icon ion-ios7-arrow-left"></i> Joueurs de la ligue</button>
+              <button class="button button-icon icon ion-ios7-minus-outline" ng-click="data.showDelete = !data.showDelete" ng-show="data.currentSlide ===0"></button>
+              <div class="title"></div>
+              <button class="button button-positive pull-right" ng-click="nextSlide()" ng-show="data.currentSlide ===0">Ajouter d'autres joueurs<i class="icon ion-ios7-arrow-right"></i></button>
+              
+    </div>
 </ion-view>

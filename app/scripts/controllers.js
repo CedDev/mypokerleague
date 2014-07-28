@@ -1,9 +1,11 @@
 'use strict';
-angular.module('Mypokerleague')
+angular
+
+.module('Mypokerleague')
 
 .controller('AppCtrl',  ['$rootScope', '$scope','$ionicNavBarDelegate', 'Auth', '$location', function($rootScope, $scope, $ionicNavBarDelegate,Auth,$location ) {
-    $scope.activeLeague = "MSOP";
-    $scope.activeSeason = "08";
+    $rootScope.activeLeague = "MSOP";
+    $rootScope.activeSeason = "08";
 
     $scope.goBack = function() {
         $ionicNavBarDelegate.back();
@@ -31,93 +33,176 @@ angular.module('Mypokerleague')
 }])
 
 .controller('leagueCtrl', ['$scope', '$firebase', '$stateParams',function($scope,$firebase,$stateParams) {
-   $scope.league = [
-    { name: 'MSOP', id: 1 }
-  ];
+   $scope.activeLeague = $stateParams.leagueId;
 }])
 
-.controller('playersCtrl', ['$scope', '$firebase', '$stateParams',function($scope,$firebase,$stateParams) {
+.controller('playersCtrl', ['$scope', '$firebase', '$stateParams', '$ionicSlideBoxDelegate' , '$ionicPopup', function($scope,$firebase,$stateParams, $ionicSlideBoxDelegate, $ionicPopup) {
 
-  var fb = new Firebase("https://mypokerleague.firebaseio.com/");
+      $scope.data = {
+        showDelete: false,
+        currentSlide : 0
+      };
       
-      $scope.players = [];
-      fb.child('MSOP/Players').on('child_added', function (snap) {
-          loadUser(snap.name(), function(error, obj){
-            $scope.$apply(function () {
-              $scope.players.push(obj);
-            });
-          });
-      });
+      $ionicSlideBoxDelegate.enableSlide = false;
 
-  function joinPaths(id, paths, callback) {
-      var returnCount = 0;
-      var expectedCount = paths.length;
-      var mergedObject = {};
+      var fbPlayers = new Firebase("https://mypokerleague.firebaseio.com/MSOP/Players");
+      $scope.players = $firebase(fbPlayers);
+          
+      $scope.nextSlide = function() {
+        var fbUsers = new Firebase("https://mypokerleague.firebaseio.com/users/");
+        $scope.otherPlayers = $firebase(fbUsers);
+        $ionicSlideBoxDelegate.next();
+      }
+      $scope.prevSlide = function() {
+        $ionicSlideBoxDelegate.previous();
+      }
 
-      paths.forEach(function (p) {
-          fb.child(p + '/' + id).once('value',
-              // success
-              function (snap) {
-                  // add it to the merged data
-                  extend(mergedObject, snap.val());
-                  
-                  // when all paths have resolved, we invoke
-                  // the callback (jQuery.when would be handy here)
-                  if (++returnCount === expectedCount) {
-                      callback(null, mergedObject);
-                  }
-              },
-              // error
-              function (error) {
-                  returnCount = expectedCount + 1; // abort counters
-                  callback(error, null);
-              }
-          );
-      });
-  }
+      $scope.addPlayer = function(key, player) {
+          var newPlayer = new Firebase("https://mypokerleague.firebaseio.com/MSOP/Players/" + key);
+          newPlayer.update({pseudo: player.pseudo});
+          $ionicSlideBoxDelegate.previous();
+      }
 
-  function loadUser(userId, callback) {
-      joinPaths(userId, ['users'], function(error, obj){
-        callback(null, obj);
-      });
-  }
+      $scope.removePlayer = function(key) {
+        var confirmPopup = $ionicPopup.confirm({
+           title: 'Retirer un joueur',
+           template: 'Etes vous sur de vouloir retirer le joueur de la ligue?'
+        });
+       confirmPopup.then(function(res) {
+           if(res) {
+              var oldPlayer = new Firebase("https://mypokerleague.firebaseio.com/MSOP/Players/" + key);
+              oldPlayer.remove();
+           } else {
+             
+           }
+        });
+      }
 
-  function extend(base) {
-      var parts = Array.prototype.slice.call(arguments, 1);
-      parts.forEach(function (p) {
-          if (p && typeof (p) === 'object') {
-              for (var k in p) {
-                  if (p.hasOwnProperty(k)) {
-                      base[k] = p[k];
-                  }
-              }
-          }
-      });
-      return base;
-  }
+      $scope.slideChanged = function(slide) {
+        $scope.data.currentSlide = $ionicSlideBoxDelegate.currentIndex();
+  };
+
+}])
+
+.controller('eventsCtrl', ['$scope', '$firebase','$stateParams',  '$ionicPopup', function($scope,$firebase,$stateParams,$ionicPopup) {
+      $scope.activeLeague = $stateParams.leagueId;
+      $scope.activeSeason = $stateParams.seasonId;
+
+      $scope.data = {
+        showDelete: false,
+        currentSlide : 0
+      };
+
+    var eventRef = new Firebase("https://mypokerleague.firebaseio.com/"+$scope.activeLeague+"/Events/"+$scope.activeSeason );
+    $scope.events = $firebase(eventRef);
+
+    $scope.removeEvent = function(key) {
+        var confirmPopup = $ionicPopup.confirm({
+           title: 'Supprimer un tounoi',
+           template: 'Etes vous sur de vouloir supprimer ce tournoi de la ligue?'
+        });
+       confirmPopup.then(function(res) {
+           if(res) {
+              var oldEvent = new Firebase("https://mypokerleague.firebaseio.com/"+$scope.activeLeague+"/Events/"+$scope.activeSeason+"/" + key);
+              oldEvent.remove();
+           } else {
+             
+           }
+        });
+      }
 
 
 }])
 
-.controller('eventCtrl', ['$scope', '$firebase', '$stateParams',function($scope,$firebase,$stateParams) {
+.controller('eventCtrl', ['$scope', '$firebase', '$stateParams', '$ionicActionSheet', 'Auth', function($scope,$firebase,$stateParams,$ionicActionSheet, Auth) {
       $scope.activeLeague = $stateParams.leagueId;
       $scope.activeSeason = $stateParams.seasonId;
       $scope.activeEvent = $stateParams.eventId;
 
-      OfflineFirebase.restore();
-      var eventRef = new OfflineFirebase("https://mypokerleague.firebaseio.com/"+$scope.activeLeague+"/Events/"+$scope.activeSeason+"/"+ $scope.activeEvent );
+      //récupérer event info
+      var eventRef = new Firebase("https://mypokerleague.firebaseio.com/"+$scope.activeLeague+"/Events/"+$scope.activeSeason+"/"+ $scope.activeEvent );
       $scope.event = $firebase(eventRef);
+
+      //recupérer player info
+      $scope.user = Auth.getUser();
+      var userRef = new Firebase("https://mypokerleague.firebaseio.com/users/" +$scope.user.uid);
+      $scope.player = $firebase(userRef);
+
+      var playerRef = new Firebase("https://mypokerleague.firebaseio.com/"+$scope.activeLeague+"/Events/"+$scope.activeSeason+"/"+ $scope.activeEvent+"/players/"+  $scope.user.uid);
+      $scope.player.eventInfo = $firebase(playerRef);
+
+       // Triggered on a button click, or some other target
+       $scope.showRegister = function() {
+
+         // Show the action sheet
+         var hideSheet = $ionicActionSheet.show({
+           buttons: [
+             { text: '<b>Présent</b>' },
+             { text: '<small>je ne sais pas</small>' }
+           ],
+           destructiveText: 'Absent',
+           titleText: 'S\'incrire au tournoi',
+           cancelText: 'Annuler',
+           cancel: function() {
+                // add cancel code..
+              },
+           buttonClicked: function(index) {
+              var playerRef = new Firebase("https://mypokerleague.firebaseio.com/"+$scope.activeLeague+"/Events/"+$scope.activeSeason+"/"+ $scope.activeEvent+"/players/"+  $scope.user.uid);
+              playerRef.update({ pseudo: $scope.player.pseudo ,register:'ok', registerDate : GetCurrentDate() }, function(err) {
+              });
+             return true;
+           },
+           destructiveButtonClicked : function(index) {
+              var playerRef = new Firebase("https://mypokerleague.firebaseio.com/"+$scope.activeLeague+"/Events/"+$scope.activeSeason+"/"+ $scope.activeEvent+"/players/"+  $scope.user.uid);
+              playerRef.update({ pseudo: $scope.player.pseudo ,register:'nok', registerDate : GetCurrentDate() }, function(err) {
+              });
+             return true;
+           }
+         });
+       };
+
+
+      function GetCurrentDate() {
+          // Today date time which will used to set as default date.
+          var todayDate = new Date();
+          todayDate = todayDate.getFullYear() + "-" +
+                         ("0" + (todayDate.getMonth() + 1)).slice(-2) + "-" +
+                         ("0" + todayDate.getDate()).slice(-2) + " " + ("0" + todayDate.getHours()).slice(-2) + ":" +
+                         ("0" + todayDate.getMinutes()).slice(-2);
+   
+          return todayDate;
+      }
+
 }])
 
-.controller('eventsCtrl', ['$scope', '$firebase', function($scope,$firebase) {
 
-    OfflineFirebase.restore();
-    var eventRef = new OfflineFirebase("https://mypokerleague.firebaseio.com/MSOP/Events/08/");
-    // Automatically syncs everywhere in realtime
-    $scope.events = $firebase(eventRef);
-    eventRef.on('value', function(snapshot) {
-        //console.log(snapshot.val());
-    }, undefined, undefined, true);
+.controller('eventEditCtrl',  ['$scope', '$stateParams','$firebase',  function($scope, $stateParams, $firebase) {
+    $scope.activeLeague = $stateParams.leagueId;
+    $scope.activeSeason = $stateParams.seasonId;
+    $scope.activeEvent = $stateParams.eventId;
+      
+    var eventRef = new Firebase("https://mypokerleague.firebaseio.com/"+$scope.activeLeague+"/Events/"+$scope.activeSeason+"/"+ $scope.activeEvent );
+    $scope.event = $firebase(eventRef);
+    $scope.event.number= $scope.activeEvent;
+
+    //$scope.event = {'number':'','name':'','date':'','time':'','location':''};
+
+    $scope.saveEvent = function() {
+      var eventRef = new Firebase("https://mypokerleague.firebaseio.com/"+$scope.activeLeague+"/Events/"+$scope.activeSeason +"/" + $scope.event.number);
+      eventRef.update({name: ''+ $scope.event.name, date: ''+  $scope.event.date, time: ''+  $scope.event.time,  lieu:''+ $scope.event.lieu});
+    };
+}])
+
+.controller('eventLiveCtrl',  ['$scope', '$stateParams','$firebase',  function($scope, $stateParams, $firebase) {
+    $scope.activeLeague = $stateParams.leagueId;
+    $scope.activeSeason = $stateParams.seasonId;
+    $scope.activeEvent = $stateParams.eventId;
+      
+    var eventRef = new Firebase("https://mypokerleague.firebaseio.com/"+$scope.activeLeague+"/Events/"+$scope.activeSeason+"/"+ $scope.activeEvent );
+    $scope.event = $firebase(eventRef);
+    $scope.event.number= $scope.activeEvent;
+
+
 }])
 
 .controller('loginCtrl',  ['$rootScope', '$scope', '$stateParams','$firebase', '$firebaseSimpleLogin', function($rootScope, $scope, $stateParams,$firebase, $firebaseSimpleLogin) {
@@ -163,17 +248,6 @@ angular.module('Mypokerleague')
 
 }])
 
-.controller('newCalendarCtrl',  ['$scope', '$stateParams','$firebase',  function($scope, $stateParams, $firebase) {
-    $scope.season = "08";
-    $scope.event = {'number':null,'name':null,'date':null,'time':null,'location':null};
-
-    $scope.saveEvent = function() {
-      var eventRef = new Firebase("https://mypokerleague.firebaseio.com/MSOP/Events/08/" + $scope.event.number);
-      // Automatically syncs everywhere in realtime
-      $scope.event = $firebase(eventRef);
-      eventRef.update({name: $scope.event.name,date: $scope.event.date, time: $scope.event.time,  lieu: $scope.event.location, rank :[{}]});
-    };
-}])
 
 
 .controller('rankingCtrl',  ['$scope', '$stateParams', function($scope, $stateParams) {
@@ -234,8 +308,7 @@ angular.module('Mypokerleague')
       $scope.user = Auth.getUser();
       $scope.uid = ($scope.user) ? $scope.user.uid:'undefined';
 
-      OfflineFirebase.restore();
-      var playerRef = new OfflineFirebase("https://mypokerleague.firebaseio.com/users/" +$scope.uid);
+      var playerRef = new Firebase("https://mypokerleague.firebaseio.com/users/" +$scope.uid);
       $scope.player = $firebase(playerRef);
 
       playerRef.update({ lastConn : GetCurrentDate()}, function(err) {

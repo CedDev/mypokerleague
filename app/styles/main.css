@@ -11,6 +11,24 @@
 	background-image: url('../images/01.jpg');
 }
 
+.bgPoker-bleu{
+  background-image: url('../images/02.jpg');
+}
+
+.bgPoker-violet{
+  background-image: url('../images/03.jpg');
+}
+
+.bgPoker-rouge{
+  background-image: url('../images/04.jpg');
+}
+
+.bgPoker-orange{
+  background-image: url('../images/05.jpg');
+}
+
+
+
 .listPoker{
   font-weight: bold;
   color:#FFFFFF;

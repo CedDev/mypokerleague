@@ -60,4 +60,22 @@ angular.module('Mypokerleague')
 .factory('ChatService', ['$firebase', function($firebase) {
   var ref = new Firebase(FIREBASE_URL + 'chat');
   return $firebase(ref);
-}]);
+}])
+
+
+.directive( 'goClick', function ( $location ) {
+  return function ( scope, element, attrs ) {
+    var path;
+
+    attrs.$observe( 'goClick', function (val) {
+      path = val;
+    });
+
+    element.bind( 'click', function () {
+      scope.$apply( function () {
+        console.log(path);
+        $location.path( path );
+      });
+    });
+  };
+});
