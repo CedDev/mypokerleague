@@ -75,7 +75,19 @@ après c'est magique, on tape
 grunt serve
 ```
 et ca lance tout
-... ou pour les fainéants comme moi, lancer juste le fichier start.cmd.
+
+
+###Lancement de l'application sur Android
+après c'est magique, on tape
+
+```sh
+grunt build
+```
+Connecter votre appareil à votre pc
+```sh
+ionic run android
+```
+
 
 ---
 

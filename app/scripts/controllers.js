@@ -80,18 +80,13 @@ angular
 
       $scope.slideChanged = function(slide) {
         $scope.data.currentSlide = $ionicSlideBoxDelegate.currentIndex();
-  };
+      };
 
 }])
 
 .controller('eventsCtrl', ['$scope', '$firebase','$stateParams',  '$ionicPopup', function($scope,$firebase,$stateParams,$ionicPopup) {
       $scope.activeLeague = $stateParams.leagueId;
       $scope.activeSeason = $stateParams.seasonId;
-
-      $scope.data = {
-        showDelete: false,
-        currentSlide : 0
-      };
 
     var eventRef = new Firebase("https://mypokerleague.firebaseio.com/"+$scope.activeLeague+"/Events/"+$scope.activeSeason );
     $scope.events = $firebase(eventRef);
@@ -114,7 +109,7 @@ angular
 
 }])
 
-.controller('eventCtrl', ['$scope', '$firebase', '$stateParams', '$ionicActionSheet', 'Auth', function($scope,$firebase,$stateParams,$ionicActionSheet, Auth) {
+.controller('eventCtrl', ['$scope', '$firebase', '$stateParams', '$ionicActionSheet', 'Auth', '$ionicSlideBoxDelegate' , '$ionicPopup', function($scope,$firebase,$stateParams,$ionicActionSheet, Auth, $ionicSlideBoxDelegate , $ionicPopup) {
       $scope.activeLeague = $stateParams.leagueId;
       $scope.activeSeason = $stateParams.seasonId;
       $scope.activeEvent = $stateParams.eventId;
@@ -125,14 +120,45 @@ angular
 
       //recupérer player info
       $scope.user = Auth.getUser();
-      var userRef = new Firebase("https://mypokerleague.firebaseio.com/users/" +$scope.user.uid);
-      $scope.player = $firebase(userRef);
+      if (typeof $scope.user.uid !== 'undefined') {
+        var userRef = new Firebase("https://mypokerleague.firebaseio.com/users/" +$scope.user.uid);
+        $scope.player = $firebase(userRef);
+        var playerRef = new Firebase("https://mypokerleague.firebaseio.com/"+$scope.activeLeague+"/Events/"+$scope.activeSeason+"/"+ $scope.activeEvent+"/players/"+  $scope.user.uid);
+        $scope.player.eventInfo = $firebase(playerRef);
+      }
 
-      var playerRef = new Firebase("https://mypokerleague.firebaseio.com/"+$scope.activeLeague+"/Events/"+$scope.activeSeason+"/"+ $scope.activeEvent+"/players/"+  $scope.user.uid);
-      $scope.player.eventInfo = $firebase(playerRef);
 
-       // Triggered on a button click, or some other target
-       $scope.showRegister = function() {
+
+
+      /* Slide Management 
+      ********************/
+      $scope.data = {
+        showDelete: false,
+        currentSlide : 0
+      };
+      
+      $ionicSlideBoxDelegate.enableSlide= false;
+
+      $scope.slideTo = function(index) {
+        switch (index) {
+          case 0:
+
+              break;
+          case 1:
+              $scope.slidePlayers();
+              break;
+          }
+        $ionicSlideBoxDelegate.slide(index);
+      }
+
+      $scope.slideChanged = function(slide) {
+        $scope.data.currentSlide = $ionicSlideBoxDelegate.currentIndex();
+      };
+
+      /* First Slide  
+      ********************/
+
+      $scope.showRegister = function() {
 
          // Show the action sheet
          var hideSheet = $ionicActionSheet.show({
@@ -160,6 +186,33 @@ angular
            }
          });
        };
+
+      /* Second Slide  
+      ********************/
+      $scope.slidePlayers = function() {
+            $scope.eventPlayers=[];
+            $scope.absentPlayers=[];
+            $scope.leaguePlayers=[];
+
+            /* joueurs sans réponse 
+            var leaguePlayers = new Firebase("https://mypokerleague.firebaseio.com/"+$scope.activeLeague+"/Players");
+            $scope.leaguePlayers = $firebase(leaguePlayers);*/
+
+
+            /* joueurs présents et absents */
+            var eventPlayers = new Firebase("https://mypokerleague.firebaseio.com/"+$scope.activeLeague+"/Events/"+$scope.activeSeason+"/"+ $scope.activeEvent+"/players")
+            eventPlayers.on('child_added', function(snap) {
+                if( snap.val().register==="ok") {
+                  $scope.eventPlayers.push(snap.val());
+                } else {
+                  $scope.absentPlayers.push(snap.val());
+                }
+                ;
+            });
+
+
+
+      }
 
 
       function GetCurrentDate() {
