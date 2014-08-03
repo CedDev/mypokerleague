@@ -1,0 +1,77 @@
+<ion-view title="<i class='icon ion-calendar'></i> {{activeLeague}} S{{activeSeason}}E{{activeEvent}}">
+  <ion-content class="has-header bgPoker">
+
+    <ion-slide-box on-slide-changed="slideChanged(index)" show-pager="false">
+      <ion-slide>
+          <div>
+            <timer countdown="initialCountdown" max-time-unit="'minute'" interval="1000">
+            <div class="theCircles group" style="width: 100%; margin-top: 5px; margin-bottom: 5px;">
+                    <div class="minutesDiv" style="border-width: 0px 1px; border-right-style: solid; border-right-color: rgb(51, 51, 51); border-left-style: solid; border-left-color: rgb(149, 149, 149); width: 50%; height: 144px; background: url(http://www.lambertgroupproductions.com/canyon/countdown_pro/circular_countdown_images/transparentBG_60.png);">
+                        <canvas class="canvasMinutes" width="50%" height="80"></canvas>
+                        <div class="innerNumber" style="color: rgb(255, 255, 255); font-size: 60px; line-height: 60px; display: block; left: 64px; top: 15px;text-align:center;">{{mminutes}}</div>
+                        <div class="innerText" style="top: 0px; color: rgb(255, 255, 255); font-size: 24px; line-height: 24px; margin-top: 0px; padding-top: 20px; padding-bottom: 20px; background: url(images/transparentBG_40.png);text-align:center;">Minute{{minutesS}}</div>
+                    </div>
+                    <div class="secondsDiv" style="border-width: 0px 0px 0px 1px; border-left-style: solid; border-left-color: rgb(149, 149, 149); width: 50%; height: 144px; background: url(http://www.lambertgroupproductions.com/canyon/countdown_pro/circular_countdown_images/transparentBG_60.png);">  
+                        <canvas class="canvasSeconds" width="50%" height="80"></canvas>
+                        <div class="innerNumber" style="color: rgb(255, 255, 255); font-size: 60px; line-height: 60px; display: block; left: 68px; top: 15px;text-align:center;">{{sseconds}}</div>
+                        <div class="innerText" style="top: 0px; color: rgb(255, 255, 255); font-size: 24px; line-height: 24px; margin-top: 0px; padding-top: 20px; padding-bottom: 20px; background: url(images/transparentBG_40.png);text-align:center;">Second{{secondsS}}</div>
+                    </div>
+                </div>
+              </timer>
+</div>
+
+          <div class="list card">
+                          fdgsdfgfsdg
+          </div>
+
+      </ion-slide>
+      <ion-slide>
+        <div class="list card">
+          <div class="item item-divider">
+    Présents
+  </div>
+          <ion-list show-delete="data.showDelete">
+            <ion-item ng-repeat="(key,player) in eventPlayers" href="#/app/players/{{activeLeague}}" class="item item-icon-left item-icon-right">
+              <ion-delete-button class="ion-minus-circled" ng-click="removePlayer(key)">
+              </ion-delete-button>
+              <i class="icon ion-ios7-person"></i>
+              {{player.pseudo}}
+              <i class="icon ion-chevron-right"></i>
+            </ion-item>
+          </ion-list>
+           <div class="item item-divider">
+    Absents
+  </div>
+          <ion-list show-delete="data.showDelete">
+            <ion-item ng-repeat="(key,player) in absentPlayers" href="#/app/players/{{activeLeague}}" class="item item-icon-left item-icon-right">
+              <ion-delete-button class="ion-minus-circled" ng-click="removePlayer(key)">
+              </ion-delete-button>
+              <i class="icon ion-ios7-close-outline"></i>
+              {{player.pseudo}}
+              <i class="icon ion-chevron-right"></i>
+            </ion-item>
+          </ion-list>
+                    <div class="item item-divider">
+    Sans réponse
+  </div>
+          <ion-list show-delete="data.showDelete">
+            <ion-item ng-repeat="(key,player) in missingPlayers" href="#/app/players/{{activeLeague}}" class="item item-icon-left item-icon-right">
+              <ion-delete-button class="ion-minus-circled" ng-click="removePlayer(key)">
+              </ion-delete-button>
+              <i class="icon ion-ios7-help-outline"></i>
+              {{player.pseudo}}
+              <i class="icon ion-chevron-right"></i>
+            </ion-item>
+          </ion-list>
+        </div>
+
+
+      </ion-slide>
+    </ion-slide-box>
+  </ion-content>
+  <div class="bar bar-footer"> 
+    <button class="button button-positive" go-click="/app/eventLive/{{activeLeague}}/{{activeSeason}}/{{activeEvent}}"><i class="icon ion-play"></i> Commencer le tournoi</button>
+    <div class="title"></div>
+    <button class="button pull-right" go-click="/app/eventEdit/{{activeLeague}}/{{activeSeason}}/{{activeEvent}}"><i class="icon ion-ios7-people"></i> Modifier</button>
+  </div>
+</ion-view>

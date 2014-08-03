@@ -255,6 +255,7 @@ angular
     $scope.event = $firebase(eventRef);
     $scope.event.number= $scope.activeEvent;
 
+    $scope.initialCountdown= 1500;
 
 }])
 

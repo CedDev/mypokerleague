@@ -46,3 +46,56 @@
 .pokerInputDisabled{
     color: #B0B0B0!important;
 }
+
+
+.theCircles {
+  margin:0 auto;
+  padding:0;
+}
+.minutesDiv {
+  position:relative;
+  float:left;
+  display:block;
+  padding:0;
+  margin:0;
+}
+.canvasMinutes {
+  margin:0;
+  padding:0;
+}
+.minutesDiv .innerText {
+  padding:0;
+  margin:0;
+  position:relative;
+}
+.minutesDiv .innerNumber {
+  display:none;
+  line-height:inherit;
+  position:absolute;
+  padding:0;
+  margin:0;
+}
+
+.secondsDiv {
+  position:relative;
+  float:left;
+  display:block;
+  padding:0;
+  margin:0;
+}
+.canvasSeconds {
+  margin:0;
+  padding:0;
+}
+.secondsDiv .innerText {
+  padding:0;
+  margin:0;
+  position:relative;
+}
+.secondsDiv .innerNumber {
+  display:none;
+  line-height:inherit;
+  position:absolute;
+  padding:0;
+  margin:0;
+}
