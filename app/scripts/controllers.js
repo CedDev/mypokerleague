@@ -357,7 +357,7 @@ angular
     };
   }])
 
-.controller('profilCtrl',  ['$rootScope', '$scope', '$location', 'Auth', '$firebase', function ($rootScope, $scope, $location, Auth, $firebase) {
+.controller('profilCtrl',  ['$rootScope', '$scope', '$location', 'Auth', '$firebase','$ionicSlideBoxDelegate', function ($rootScope, $scope, $location, Auth, $firebase,$ionicSlideBoxDelegate) {
       
       $scope.user = Auth.getUser();
       $scope.uid = ($scope.user) ? $scope.user.uid:'undefined';
@@ -390,6 +390,18 @@ angular
           return todayDate;
       }
 
+      $scope.slideChanged = function(slide) {
+        $scope.data.currentSlide = $ionicSlideBoxDelegate.currentIndex();
+      };
+
+    $scope.nextSlide = function() {
+        $ionicSlideBoxDelegate.next();
+      }
+
+    $scope.prevSlide = function() {
+        $ionicSlideBoxDelegate.previous();
+      }
+
       $scope.saveUser = function () {
 
         //mise à jour de la date de création si inexisante
@@ -404,7 +416,11 @@ angular
             realName:  ''+ $scope.player.realName, 
             email: $scope.user.email,
             mobile:  ''+ $scope.player.mobile, 
-            address:  ''+ $scope.player.address
-          }, function(err) {});
+            address: { rue: ''+ $scope.player.address.rue, 
+                       cp: ''+ $scope.player.address.cp,
+                       ville:''+ $scope.player.address.ville,
+                       reception:''+ $scope.player.address.reception
+                      }
+          }, function(err) {});   
       };
   }]);

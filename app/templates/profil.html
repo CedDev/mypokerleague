@@ -31,14 +31,67 @@
                 <span class="input-label">Contact  mobile</span>
                 <input type="text" class="pokerInput" placeHolder="06."ng-model="player.mobile">
             </label>
-            <ion-list >
+        </div>
+        <div class="list card" ng-show="signedIn()">
+        <ion-slide-box on-slide-changed="slideHasChanged($index)" show-pager="false">           
+            <ion-slide>
+               <div class="box yellow">
+                    <ion-item class="item item-icon-left item-icon-right"  ng-click="nextSlide()">
+                        <i class="icon ion-location"></i>
+                        <h2>Adresse</h2>
+                        <i class="icon ion-edit"></i> 
+                    </ion-item>
+                    <div class="card">
+                        <div class="item item-text-wrap">
+                            <p>{{player.address.rue}}</p>
+                            <p>{{player.address.cp}}</p>
+                            <p>{{player.address.ville}}</p>
+                        </div>
+                    </div>                 
+                </div>
+            </ion-slide>
+            <ion-slide>
+                <div class="box red">
+                <ion-item class="item item-icon-left item-icon-right"  ng-click="prevSlide()">
+                <i class="icon ion-chevron-left"></i> 
+                    <h2>Saisir Adresse</h2>
+                    
+                  </ion-item>  
+                 <label class="item item-input">            
+                    <span class="input-label">Rue</span>
+                    <input type="text" class="pokerInput" ng-model="player.address.rue">
+                 </label>
+                <label class="item item-input">            
+                    <span class="input-label">Code postal</span>
+                    <input type="text" class="pokerInput" ng-model="player.address.cp">
+                 </label>
+                <label class="item item-input">            
+                    <span class="input-label">Ville</span>
+                    <input type="text" class="pokerInput" ng-model="player.address.ville">
+                 </label>
+                 <ul class="list">
+                    <li class="item item-toggle">
+                        <b>Lieu de réception</b>              
+                   <label class="toggle toggle-assertive">
+                       <input type="checkbox" ng-model="player.address.reception">
+                       <div class="track">
+                         <div class="handle"></div>
+                       </div>
+                     </label>
+                     </li>
+                     </ul>
+                </div> 
+            </ion-slide>
+        </ion-slide-box>
+        </div>
+            
+           <!--  <ion-list >
               <ion-item class="item item-icon-left item-icon-right" href="#/app/working">
                 <i class="icon ion-location"></i>
-                Adresse
-                <i class="icon ion-chevron-down"></i> 
+                 d
+                <i class="icon ion-chevron-down"></i>
               </ion-item>
-            </ion-list>
-    </div>
+            </ion-list> -->
 
         <div class="list card" ng-show="signedIn()">
                     <label class="item item-input">
