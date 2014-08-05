@@ -256,6 +256,10 @@ angular
     $scope.event.number= $scope.activeEvent;
 
     $scope.initialCountdown= 1500;
+    $scope.smallBlind= 50;
+    $scope.nextSmallBlind= 100;
+    $scope.bigBlind= 100;
+    $scope.nextBigBlind= 200;
 
 }])
 
