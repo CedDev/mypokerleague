@@ -6,13 +6,11 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('Mypokerleague', ['ionic','firebase','pickadate'])
+angular.module('Mypokerleague', ['ionic','firebase','pickadate','timer'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
-    if(window.StatusBar) {
-      StatusBar.styleDefault();
-    }
+
   });
 })
 
